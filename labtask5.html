@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Academic Profile</title>
+    <meta name="description" content="Personal academic profile webpage">
+    <meta name="keywords" content="student, profile, education, html5">
+    <meta name="author" content="Your Name">
+</head>
+<body>
+
+<header>
+    <h1>Your Name</h1>
+</header>
+
+<nav>
+    <a href="#">Home</a> |
+    <a href="#">Education</a> |
+    <a href="#">Contact</a>
+</nav>
+
+<main>
+
+    <section>
+        <h2>Biography</h2>
+        <p>I am a student of Computer Science interested in web development.</p>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+
+        <table border="1">
+            <caption>Education Details</caption>
+            <thead>
+                <tr>
+                    <th>Degree</th>
+                    <th>Institution</th>
+                    <th>Year</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>BSc in CS</td>
+                    <td>AIUB</td>
+                    <td>2026</td>
+                    <td>3.40</td>
+                </tr>
+                <tr>
+                    <td>HSC</td>
+                    <td>Rajshahi Cantonment Board College</td>
+                    <td>2022</td>
+                    <td>5.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Contact Me</h2>
+
+        <form action="#" method="post">
+
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required placeholder="Enter your name"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required placeholder="Enter your email"><br><br>
+
+            <label for="phone">Phone:</label><br>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{11}" placeholder="01346854335"><br><br>
+
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" required placeholder="Write your message" maxlength="200"></textarea><br><br>
+
+            <input type="submit" value="Send">
+            <input type="reset" value="Clear">
+
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Your Name. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
