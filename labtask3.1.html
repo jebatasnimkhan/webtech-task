@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Task 03</title>
+
+  <style>
+    .box1 {
+      width: 200px;
+      height: 100px;
+      padding: 10px;
+      border: 2px solid red;
+      margin: 10px;
+      background-color: lightcoral;
+    }
+
+    .box2 {
+      width: 200px;
+      height: 100px;
+      padding: 20px;
+      border: 5px solid blue;
+      margin: 20px;
+      background-color: lightblue;
+      box-sizing: border-box;
+    }
+
+    .box3 {
+      width: 200px;
+      height: 100px;
+      padding: 30px;
+      border: 3px solid green;
+      margin: 30px;
+      background-color: lightgreen;
+    }
+
+    /* Display properties */
+    .block {
+      display: block;
+      background-color: yellow;
+      margin: 10px;
+    }
+
+    .inline {
+      display: inline;
+      background-color: orange;
+    }
+
+    .inline-block {
+      display: inline-block;
+      width: 150px;
+      height: 50px;
+      background-color: pink;
+      margin: 10px;
+    }
+
+    /* Visibility vs Display */
+    .hidden {
+      visibility: hidden;
+    }
+
+    .none {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box1">Here is Box 1(Red box)</div>
+  <div class="box2">Here isBox 2 (Blue border-box)  </div>
+  <div class="box3">Here is Box 3(Green box)</div>
+
+  <p class="block">The name of my country is Bangladesh.</p>
+  <span class="inline">It is very small.</span>
+  <span class="inline-block">It has huge population.</span>
+
+  <p class="hidden">This is hidden (visibility: hidden)</p>
+  <p class="none">This is removed (display: none)</p>
+
+</body>
+</html>
