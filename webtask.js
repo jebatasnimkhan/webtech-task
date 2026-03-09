@@ -2,19 +2,19 @@
 // ID: 23-54856-3
 // Name: Jeba Tasnim Khan
 
-let roll = document.getElementById("roll");
+let rollInput = document.getElementById("roll");
 let nameInput = document.getElementById("name");
 let addBtn = document.getElementById("addBtn");
 let list = document.getElementById("studentList");
-let total = document.getElementById("total");
-let attendance = document.getElementById("attendance");
-let search = document.getElementById("search");
+let totalText = document.getElementById("total");
+let attendanceText = document.getElementById("attendance");
+let searchInput = document.getElementById("search");
 
 
-// Disable Add button if name is empty
+// Enable Add button only when name is typed
 nameInput.addEventListener("input", function () {
 
-    if (nameInput.value === "") {
+    if (nameInput.value.trim() === "") {
         addBtn.disabled = true;
     } else {
         addBtn.disabled = false;
@@ -26,25 +26,27 @@ nameInput.addEventListener("input", function () {
 // Add student
 addBtn.onclick = function () {
 
-    let r = roll.value;
-    let n = nameInput.value;
+    let roll = rollInput.value;
+    let name = nameInput.value;
 
-    if (r === "" || n === "") {
+    if (roll === "" || name === "") {
         alert("Enter roll and name");
         return;
     }
 
     let li = document.createElement("li");
-    li.innerText = r + " - " + n + " ";
+
+    let text = document.createElement("span");
+    text.innerText = roll + " - " + name;
 
 
     // Present checkbox
-    let check = document.createElement("input");
-    check.type = "checkbox";
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
 
-    check.onchange = function () {
+    checkbox.onchange = function () {
 
-        if (check.checked) {
+        if (checkbox.checked) {
             li.style.backgroundColor = "lightgreen";
         } else {
             li.style.backgroundColor = "";
@@ -55,30 +57,32 @@ addBtn.onclick = function () {
 
 
     // Edit button
-    let edit = document.createElement("button");
-    edit.innerText = "Edit";
+    let editBtn = document.createElement("button");
+    editBtn.innerText = "Edit";
 
-    edit.onclick = function () {
+    editBtn.onclick = function () {
 
-        let newRoll = prompt("Edit roll:", r);
-        let newName = prompt("Edit name:", n);
+        let newRoll = prompt("Edit roll:", roll);
+        let newName = prompt("Edit name:", name);
 
         if (newRoll && newName) {
-            r = newRoll;
-            n = newName;
-            li.firstChild.nodeValue = r + " - " + n + " ";
+            roll = newRoll;
+            name = newName;
+            text.innerText = roll + " - " + name;
         }
 
     };
 
 
     // Delete button
-    let del = document.createElement("button");
-    del.innerText = "Delete";
+    let delBtn = document.createElement("button");
+    delBtn.innerText = "Delete";
 
-    del.onclick = function () {
+    delBtn.onclick = function () {
 
-        if (confirm("Are you sure you want to delete this student?")) {
+        let confirmDelete = confirm("Are you sure you want to delete this student?");
+
+        if (confirmDelete) {
             li.remove();
             updateTotal();
             updateAttendance();
@@ -87,13 +91,14 @@ addBtn.onclick = function () {
     };
 
 
-    li.appendChild(check);
-    li.appendChild(edit);
-    li.appendChild(del);
+    li.appendChild(checkbox);
+    li.appendChild(text);
+    li.appendChild(editBtn);
+    li.appendChild(delBtn);
 
     list.appendChild(li);
 
-    roll.value = "";
+    rollInput.value = "";
     nameInput.value = "";
     addBtn.disabled = true;
 
@@ -105,8 +110,8 @@ addBtn.onclick = function () {
 // Update total students
 function updateTotal() {
 
-    let count = list.children.length;
-    total.innerText = "Total students: " + count;
+    let total = list.children.length;
+    totalText.innerText = "Total students: " + total;
 
 }
 
@@ -114,8 +119,8 @@ function updateTotal() {
 // Update attendance
 function updateAttendance() {
 
-    let items = list.children;
     let present = 0;
+    let items = list.children;
 
     for (let i = 0; i < items.length; i++) {
 
@@ -127,24 +132,25 @@ function updateAttendance() {
 
     }
 
-    let absent = items.length - present;
+    let total = items.length;
+    let absent = total - present;
 
-    attendance.innerText = "Present: " + present + ", Absent: " + absent;
+    attendanceText.innerText = "Present: " + present + ", Absent: " + absent;
 
 }
 
 
 // Search student
-search.addEventListener("input", function () {
+searchInput.addEventListener("input", function () {
 
-    let text = search.value.toLowerCase();
+    let value = searchInput.value.toLowerCase();
     let items = list.children;
 
     for (let i = 0; i < items.length; i++) {
 
-        let student = items[i].innerText.toLowerCase();
+        let text = items[i].innerText.toLowerCase();
 
-        if (student.includes(text)) {
+        if (text.includes(value)) {
             items[i].style.display = "list-item";
         } else {
             items[i].style.display = "none";
@@ -162,11 +168,11 @@ function sortStudents() {
 
     items.sort(function (a, b) {
 
-        let A = a.innerText.toLowerCase();
-        let B = b.innerText.toLowerCase();
+        let nameA = a.innerText.toLowerCase();
+        let nameB = b.innerText.toLowerCase();
 
-        if (A < B) return -1;
-        if (A > B) return 1;
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
         return 0;
 
     });
