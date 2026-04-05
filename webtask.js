@@ -1,200 +1,109 @@
-// DOM Lab Task
-// ID: 23-54856-3
-// Name: Jeba Tasnim Khan
+// Typing Animation (your code)
+const typingElement = document.getElementById("typing-text");
+const phrases = [
+    "A Front-End Web Developer",
+    "An HTML & CSS Enthusiast",
+    "A JavaScript Learner",
+    "A Creative Problem Solver"
+];
+var phraseIndex = 0;
+var charIndex = 0;
+var isDeleting = false;
+var typingSpeed = 80;
 
-let rollInput = document.getElementById("roll");
-let nameInput = document.getElementById("name");
-let addBtn = document.getElementById("addBtn");
-let list = document.getElementById("studentList");
-let totalText = document.getElementById("total");
-let attendanceText = document.getElementById("attendance");
-let searchInput = document.getElementById("search");
+function typeText() {
+    var currentPhrase = phrases[phraseIndex];
 
-
-// Enable Add button only when name is typed
-nameInput.addEventListener("input", function () {
-
-    if (nameInput.value.trim() === "") {
-        addBtn.disabled = true;
+    if (isDeleting) {
+        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 40;
     } else {
-        addBtn.disabled = false;
+        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 80;
     }
 
+    if (!isDeleting && charIndex === currentPhrase.length) {
+        typingSpeed = 1500;
+        isDeleting = true;
+    }
+
+    if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typingSpeed = 400;
+    }
+
+    setTimeout(typeText, typingSpeed);
+}
+typeText();
+
+
+const projects = [
+  {
+    title: "Online Banking System",
+    desc: "A secure web-based banking platform with account management and transactions.",
+    img: "https://tse2.mm.bing.net/th/id/OIP.8eokLPUsS6xM1Je27f_DZQHaEc?rs=1&pid=ImgDetMain&o=7&rm=3",
+    link: "https://github.com/topics/online-banking-system"
+  },
+  {
+    title: "E-Commerce Shopping Cart",
+    desc: "A responsive shopping cart system for online stores.",
+    img: "https://th.bing.com/th/id/OIP.8YzKWHuPxcVaHOU72t6HOQHaEV?w=257&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3", 
+    link: "https://github.com/topics/ecommerce-shopping-cart"
+  },
+  {
+    title: "Hospital Management Dashboard",
+    desc: "A hospital management system with patient records and analytics.",
+    img: "#",
+    link: "https://github.com/topics/hospital-management-system"
+  }
+];
+
+const projectContainer = document.getElementById("project-container");
+projects.forEach(p => {
+  const card = document.createElement("div");
+  card.className = "project-card";
+  card.innerHTML = `<h3>${p.title}</h3><p>${p.desc}</p><img src="${p.img}" alt="${p.title}" style="width:100%"><br><a href="${p.link}">View</a>`;
+  projectContainer.appendChild(card);
 });
 
 
-// Add student
-addBtn.onclick = function () {
+document.getElementById("contact-form").addEventListener("submit", function(e){
+  e.preventDefault();
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let subject = document.getElementById("subject").value.trim();
+  let message = document.getElementById("message").value.trim();
+  let status = document.getElementById("form-status");
 
-    let roll = rollInput.value;
-    let name = nameInput.value;
-
-    if (roll === "" || name === "") {
-        alert("Enter roll and name");
-        return;
-    }
-
-    let li = document.createElement("li");
-
-    let text = document.createElement("span");
-    text.innerText = roll + " - " + name;
-
-
-    // Present checkbox
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-
-    checkbox.onchange = function () {
-
-        if (checkbox.checked) {
-            li.style.backgroundColor = "lightgreen";
-        } else {
-            li.style.backgroundColor = "";
-        }
-
-        updateAttendance();
-    };
-
-
-    // Edit button
-    let editBtn = document.createElement("button");
-    editBtn.innerText = "Edit";
-
-    editBtn.onclick = function () {
-
-        let newRoll = prompt("Edit roll:", roll);
-        let newName = prompt("Edit name:", name);
-
-        if (newRoll && newName) {
-            roll = newRoll;
-            name = newName;
-            text.innerText = roll + " - " + name;
-        }
-
-    };
-
-
-    // Delete button
-    let delBtn = document.createElement("button");
-    delBtn.innerText = "Delete";
-
-    delBtn.onclick = function () {
-
-        let confirmDelete = confirm("Are you sure you want to delete this student?");
-
-        if (confirmDelete) {
-            li.remove();
-            updateTotal();
-            updateAttendance();
-        }
-
-    };
-
-
-    li.appendChild(checkbox);
-    li.appendChild(text);
-    li.appendChild(editBtn);
-    li.appendChild(delBtn);
-
-    list.appendChild(li);
-
-    rollInput.value = "";
-    nameInput.value = "";
-    addBtn.disabled = true;
-
-    updateTotal();
-    updateAttendance();
-};
-
-
-// Update total students
-function updateTotal() {
-
-    let total = list.children.length;
-    totalText.innerText = "Total students: " + total;
-
-}
-
-
-// Update attendance
-function updateAttendance() {
-
-    let present = 0;
-    let items = list.children;
-
-    for (let i = 0; i < items.length; i++) {
-
-        let cb = items[i].querySelector("input");
-
-        if (cb.checked) {
-            present++;
-        }
-
-    }
-
-    let total = items.length;
-    let absent = total - present;
-
-    attendanceText.innerText = "Present: " + present + ", Absent: " + absent;
-
-}
-
-
-// Search student
-searchInput.addEventListener("input", function () {
-
-    let value = searchInput.value.toLowerCase();
-    let items = list.children;
-
-    for (let i = 0; i < items.length; i++) {
-
-        let text = items[i].innerText.toLowerCase();
-
-        if (text.includes(value)) {
-            items[i].style.display = "list-item";
-        } else {
-            items[i].style.display = "none";
-        }
-
-    }
-
+  if(!name || !email || !subject || !message){
+    status.textContent = "⚠ Please fill all fields.";
+    status.style.color = "red";
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    status.textContent = "⚠ Invalid email format.";
+    status.style.color = "red";
+    return;
+  }
+  status.textContent = "✅ Message sent successfully!";
+  status.style.color = "green";
 });
 
 
-// Sort students A-Z
-function sortStudents() {
+const toggleBtn = document.getElementById("theme-toggle");
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+});
 
-    let items = Array.from(list.children);
 
-    items.sort(function (a, b) {
-
-        let nameA = a.innerText.toLowerCase();
-        let nameB = b.innerText.toLowerCase();
-
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
-        return 0;
-
-    });
-
-    items.forEach(function (item) {
-        list.appendChild(item);
-    });
-
+if(localStorage.getItem("theme") === "dark"){
+  document.body.classList.add("dark-mode");
 }
 
 
-// Highlight first student
-function highlightFirst() {
-
-    let items = list.children;
-
-    for (let i = 0; i < items.length; i++) {
-        items[i].style.border = "";
-    }
-
-    if (items.length > 0) {
-        items[0].style.border = "3px solid red";
-    }
-
-}
+const scrollBtn = document.getElementById("scroll-top");
+scrollBtn.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
